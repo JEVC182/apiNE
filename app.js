@@ -1,20 +1,11 @@
 const express = require("express");
 const app = express();
 const people = require("./mockData/peopleData");
+const login = require("./routes/auth");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
-app.post("/login", (req, res) => {
-  const { user } = req.body;
-
-  if (!user) {
-    return res
-      .status(400)
-      .json({ success: false, message: `Please provide a valid user name` });
-  }
-  return res.status(200).json({ success: true, message: `Welcome ${user}` });
-});
+app.use("/login", login);
 
 app.get("/api/people", (req, res) => {
   res.status(200).json({ success: true, data: people });
