@@ -35,6 +35,20 @@ app.put("/api/people/:id", (req, res) => {
   });
   res.status(200).json({ success: true, data: updatedPerson });
 });
+app.delete("/api/people/:id", (req, res) => {
+  const { id } = req.params;
+  const person = people.find((person) => person.id === Number(id));
+
+  if (!person) {
+    return res.status(404).json({
+      success: false,
+      message: `Could not found a user with id ${id}`,
+    });
+  }
+  const deletedPerson = people.filter((person) => person.id !== Number(id));
+
+  return res.status(200).json({ success: true, data: deletedPerson });
+});
 app.listen(5000, () => {
   console.log("App listening on port 5000");
 });
