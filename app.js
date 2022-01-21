@@ -4,6 +4,18 @@ const people = require("./mockData/peopleData");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.post("/login", (req, res) => {
+  const { user } = req.body;
+
+  if (!user) {
+    return res
+      .status(400)
+      .json({ success: false, message: `Please provide a valid user name` });
+  }
+  return res.status(200).json({ success: true, message: `Welcome ${user}` });
+});
+
 app.get("/api/people", (req, res) => {
   res.status(200).json({ success: true, data: people });
 });
